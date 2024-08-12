@@ -1,0 +1,78 @@
+-- creating tables
+CREATE TABLE Authors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT,
+    nationality TEXT
+);
+
+CREATE TABLE Books (
+    book_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    author_id INTEGER NOT NULL,
+    description TEXT,
+    FOREIGN KEY (author_id) REFERENCES Authors(id)
+);
+
+
+--INSERTING/CREATING 5 Authors
+INSERT INTO Authors (first_name, last_name, nationality) VALUES ('Respect', 'Ngoveni', 'South African');
+INSERT INTO Authors (first_name, last_name, nationality) VALUES ('Surprise', 'Ngobeni', 'South African');
+INSERT INTO Authors (first_name, last_name, nationality) VALUES ('Kachingwe', 'Aubrey', 'Malawi');
+INSERT INTO Authors (first_name, last_name, nationality) VALUES ('Daniel', 'Metcalfe', 'Angola');
+INSERT INTO Authors (first_name, last_name, nationality) VALUES ('Léonora', 'Miano', 'Cameroon');
+
+--INSERTING/CREATING 10 BOOKS
+INSERT INTO Books (title, author_id, description) 
+VALUES ('Les aubes Ecarlates', 5, 'Book by Léonora Miano');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('Contours Du Jour Qui Vient', 5, 'Book by Léonora Miano');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('Twilight of Torment: Melancholy', 5, 'Book by Léonora Miano');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('Season of the Shadow', 5, 'Book by Léonora Miano');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('Dark Heart of the night', 5, 'Book by Léonora Miano');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('Rouge impératrice: roman', 5, 'Book by Léonora Miano');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('Master Forex', 1, 'Is a book that will teach everthing you need to win forex.');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('No Easy Task', 2, 'in 1966 just four years after African Writers Series was launched.');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('How to win', 3, 'Book by Surprise Ngobeni To tech you how to win in everthing');
+
+INSERT INTO Books (title, author_id, description) 
+VALUES ('Out of Steppe', 4, 'Book by Daniel Metcalfe from Angola');
+
+--Count the number of books
+--SELECT COUNT(book_id) FROM Books;
+
+--Find out whick author has many books
+SELECT Authors.first_name, Authors.last_name, COUNT(Books.book_id) AS book_count
+FROM Books
+JOIN Authors ON Books.author_id = Authors.id
+GROUP BY Authors.id
+ORDER BY book_count DESC
+LIMIT 1;
+
+--3.	find out how many books there are according to nationality, eg maybe there are 5 books from South 
+--African authors and 3 books from Hong Kong 
+
+SELECT Authors.nationality, COUNT(Books.book_id) AS book_count
+FROM Books
+JOIN Authors ON Books.author_id = Authors.id
+GROUP BY Authors.nationality
+ORDER BY book_count DESC;
+
+
+-- fetch some values
+--SELECT * from Books
